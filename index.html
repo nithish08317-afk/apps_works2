@@ -1,0 +1,1357 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
+
+</style></head><body>
+<title>Apps Works Store</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one-screen bookshelf. Every category is a shelf, every type is a book spine. Categories, types and products are all added from the page. */
+:root {
+  --bg: #f4f6fa; --panel: #ffffff; --tile: #ffffff; --tile-hover: #eef2f8;
+  --ink: #1e293b; --soft: #64748b; --line: #e2e8f0;
+  --accent: #2563eb; --on-accent: #ffffff; --live: #16a34a; --danger: #dc2626; --on-hue: #ffffff;
+  --plank: #cbd5e1; --spine-mix: #ffffff; --shadow: 0 1px 2px rgba(15, 23, 42, .06), 0 1px 3px rgba(15, 23, 42, .06);
+  --h1: #6366f1; --h2: #0284c7; --h3: #ea580c; --h4: #d97706; --h5: #059669; --h6: #db2777;
+  --c1: #2563eb; --c2: #dc2626; --c3: #15803d; --c4: #a16207; --c5: #7c3aed; --c6: #db2777; --c7: #0891b2; --c8: #8b5e3c; --c9: #a21caf; --c10: #475569; --c11: #4d7c0f; --c12: #0f766e;
+  --fav: #e8782a;
+  --k-electronics: #3b82c4; --k-fashion: #d9588f; --k-home: #d9a01e; --k-grocery: #43a047; --k-books: #9c6b43; --k-sports: #7c5fd1; --k-ia7sj6y: #e0443f; --k-bnc3vyi: #14a3a8;
+  --f-display: "Syne", "Trebuchet MS", system-ui, sans-serif;
+  --f-body: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --bg: #1b2434; --panel: #243044; --tile: #2b3850; --tile-hover: #34445f;
+  --ink: #f1f5f9; --soft: #a9b6ca; --line: #3d4c66;
+  --accent: #60a5fa; --on-accent: #0f172a; --live: #4ade80; --danger: #f87171; --on-hue: #0f172a;
+  --plank: #4b5b77; --spine-mix: #1b2434; --shadow: 0 1px 2px rgba(0, 0, 0, .2);
+  --h1: #a5b4fc; --h2: #7dd3fc; --h3: #fdba74; --h4: #fcd34d; --h5: #6ee7b7; --h6: #f9a8d4;
+  --c1: #60a5fa; --c2: #f87171; --c3: #4ade80; --c4: #d97706; --c5: #a78bfa; --c6: #f472b6; --c7: #22d3ee; --c8: #d6a77a; --c9: #e879f9; --c10: #94a3b8; --c11: #a3e635; --c12: #2dd4bf;
+  --fav: #e8782a;
+  --k-electronics: #7ab3e8; --k-fashion: #f08fb8; --k-home: #f2c14e; --k-grocery: #7bd37f; --k-books: #c9976a; --k-sports: #b4a0f0; --k-ia7sj6y: #f58a85; --k-bnc3vyi: #4fd1d6;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: var(--f-body); font-size: 15px; line-height: 1.4;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 12px;
+}
+button, input, select, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.app-shell { min-height: 100%; max-width: 1840px; margin: 0 auto; display: flex; flex-direction: column; gap: 8px; }
+
+/* header */
+.top { display: flex; align-items: center; gap: 12px 18px; flex-wrap: wrap; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 8px 14px; }
+.brand { display: flex; align-items: center; gap: 12px; min-width: 0; flex: 1 1 220px; }
+.mark { width: 38px; height: 38px; flex: none; }
+.brand h1 { margin: 0; font-family: var(--f-display); font-weight: 800; font-size: 22px; letter-spacing: -.02em; line-height: 1.05; }
+.brand p { margin: 2px 0 0; font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--soft); }
+.search { position: relative; flex: 0 1 340px; min-width: 180px; }
+.search input { width: 100%; padding: 9px 92px 9px 12px; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; }
+.search input::placeholder { color: var(--soft); }
+.s-meta { position: absolute; right: 9px; top: 50%; transform: translateY(-50%); display: flex; align-items: center; gap: 6px; font-family: var(--f-mono); font-size: 11px; color: var(--soft); }
+.s-meta kbd { font-family: var(--f-mono); font-size: 11px; color: var(--soft); border: 1px solid var(--line); border-radius: 4px; padding: 0 6px; }
+.s-clear { display: none; place-items: center; width: 22px; height: 22px; padding: 0; border: 0; border-radius: 6px; background: var(--tile-hover); cursor: pointer; }
+.s-clear svg { width: 11px; height: 11px; }
+.search.has-value .s-clear { display: grid; }
+.search.has-value kbd { display: none; }
+.status { display: flex; align-items: center; gap: 12px; font-family: var(--f-mono); }
+.live { display: flex; align-items: center; gap: 8px; font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--soft); white-space: nowrap; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--live); animation: pulse 2.4s infinite; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--live) 70%, transparent); } 70%, 100% { box-shadow: 0 0 0 8px transparent; } }
+.time { font-size: 21px; font-weight: 500; letter-spacing: .05em; color: var(--accent); font-variant-numeric: tabular-nums; }
+.date { font-size: 12px; color: var(--soft); text-align: right; line-height: 1.3; }
+.actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.theme-btn { background: transparent; border: 1px solid var(--line); border-radius: 8px; padding: 7px 11px; font-family: var(--f-mono); font-size: 12px; cursor: pointer; }
+.theme-btn:hover { background: var(--tile-hover); }
+
+.sr-only { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.skip { position: absolute; left: 12px; top: -60px; z-index: 200; padding: 8px 14px; background: var(--ink); color: var(--bg); border-radius: 8px; text-decoration: none; font-weight: 600; }
+.skip:focus { top: 10px; }
+
+/* buttons */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 40px; padding: 0 18px; border: 1px solid var(--line); border-radius: 10px; background: transparent; color: var(--ink); font-weight: 600; text-decoration: none; cursor: pointer; }
+.btn:hover { background: var(--tile-hover); }
+.btn.primary { background: var(--accent); color: var(--on-accent); border-color: transparent; }
+.btn.primary:hover { filter: brightness(1.08); }
+.btn:disabled { opacity: .7; cursor: default; }
+.btn svg { width: 16px; height: 16px; flex: none; }
+.btn.sm { height: 34px; padding: 0 13px; font-size: 13.5px; border-radius: 8px; }
+.btn[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
+.badge { display: inline-grid; place-items: center; min-width: 20px; height: 20px; padding: 0 6px; border-radius: 999px; background: var(--accent); color: var(--on-accent); font-family: var(--f-mono); font-size: 11px; font-weight: 500; }
+
+/* offers banner */
+.quote { position: relative; display: flex; align-items: center; gap: 12px; padding: 8px 10px 8px 18px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.quote::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 4px; background: var(--accent); }
+.quote h2 { margin: 0; flex: none; font-family: var(--f-display); font-size: 15px; font-weight: 700; }
+.quote blockquote { margin: 0; flex: 1; min-width: 0; font-size: 14.5px; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.quote blockquote span { color: var(--soft); white-space: nowrap; }
+.q-nav { display: flex; gap: 4px; flex: none; }
+.q-nav button { display: grid; place-items: center; width: 28px; height: 28px; padding: 0; border: 1px solid var(--line); border-radius: 8px; background: transparent; cursor: pointer; }
+.q-nav button:hover { background: var(--tile-hover); }
+.q-nav svg { width: 13px; height: 13px; }
+.q-bar { position: absolute; left: 0; bottom: 0; height: 2px; width: 100%; background: var(--accent); transform: scaleX(0); transform-origin: left; }
+.q-bar.run { animation: qbar var(--dur, 9s) linear forwards; }
+@keyframes qbar { to { transform: scaleX(1); } }
+
+.cico { flex: none; width: 26px; height: 26px; padding: 4px; border-radius: 8px; background: color-mix(in srgb, var(--on-hue) 16%, transparent); }
+.del-cat { display: none; margin-top: 6px; align-self: flex-start; height: 26px; padding: 0 10px; border-radius: 6px; border: 1px solid color-mix(in srgb, var(--on-hue) 55%, transparent); background: color-mix(in srgb, var(--on-hue) 12%, transparent); color: var(--on-hue); font-family: var(--f-mono); font-size: 11px; cursor: pointer; }
+body.manage .del-cat { display: inline-block; }
+
+
+.aico { width: 18px; height: 18px; }
+.mono { flex: none; width: 36px; height: 36px; display: grid; place-items: center; overflow: hidden; border-radius: 10px; background: color-mix(in srgb, var(--hue) 18%, transparent); color: var(--hue); border: 1px solid color-mix(in srgb, var(--hue) 40%, transparent); }
+.mono .pimg { width: 100%; height: 100%; object-fit: cover; display: block; }
+.name { font-weight: 600; font-size: 14px; line-height: 1.2; overflow-wrap: anywhere; }
+.desc { font-size: 11.5px; color: var(--soft); line-height: 1.3; margin-top: 1px; overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.meta { display: flex; align-items: center; gap: 8px; margin-top: 4px; flex-wrap: wrap; }
+.price { font-family: var(--f-mono); font-size: 14px; font-weight: 500; color: var(--accent); font-variant-numeric: tabular-nums; }
+.tag { flex: none; font-family: var(--f-mono); font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase; padding: 1px 5px; border: 1px solid var(--hue); color: var(--hue); border-radius: 3px; }
+.add { flex: none; display: grid; place-items: center; width: 34px; height: 34px; padding: 0; border: 1px solid var(--line); border-radius: 9px; background: transparent; cursor: pointer; color: var(--ink); }
+.add:hover { background: var(--hue); color: var(--on-hue); border-color: transparent; }
+.add svg { width: 16px; height: 16px; }
+.del { display: none; position: absolute; top: 5px; right: 5px; place-items: center; min-width: 24px; height: 24px; padding: 0 6px; border: 1px solid var(--danger); border-radius: 6px; background: var(--tile); color: var(--danger); font-family: var(--f-mono); font-size: 11px; cursor: pointer; }
+.del svg { width: 11px; height: 11px; }
+body.manage .del { display: grid; }
+.plist { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+.pitem { display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto; gap: 12px; align-items: center; padding: 10px 12px; background: var(--tile); border: 1px solid var(--line); border-radius: 10px; }
+.pitem .ln { font-weight: 600; overflow-wrap: anywhere; }
+.pitem .lt { font-size: 12.5px; color: var(--soft); line-height: 1.3; overflow-wrap: anywhere; }
+.pitem .lp { font-family: var(--f-mono); font-weight: 500; color: var(--accent); font-variant-numeric: tabular-nums; margin-top: 2px; }
+.pitem .add:hover { background: var(--hue); color: var(--on-hue); border-color: transparent; }
+.pdel { display: none; color: var(--danger); }
+body.manage .pdel { display: inline-block; }
+
+.empty { padding: 36px 16px; text-align: center; color: var(--soft); border: 1px dashed var(--line); border-radius: 12px; }
+.empty h3 { margin: 0 0 6px; font-family: var(--f-display); font-size: 20px; color: var(--ink); }
+.empty p { margin: 0; }
+.empty .q { color: var(--ink); font-weight: 600; }
+.empty .btn { margin-top: 12px; }
+
+.foot { flex: none; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 6px 20px; font-size: 12px; color: var(--soft); background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 10px 16px; }
+.foot strong { color: var(--ink); font-weight: 600; }
+.foot .m { font-family: var(--f-mono); }
+.foot .link { background: none; border: 0; padding: 0; color: var(--soft); text-decoration: underline; cursor: pointer; font-size: 12px; }
+.foot .link:hover { color: var(--ink); }
+
+/* dialogs */
+.modal { position: fixed; inset: 0; z-index: 100; display: none; place-items: center; padding: 16px; background: rgba(15, 23, 42, .4); backdrop-filter: blur(3px); opacity: 0; transition: opacity .2s; }
+.modal.open { opacity: 1; }
+.m-panel { position: relative; width: min(440px, 100%); max-height: calc(100% - 8px); overflow-y: auto; padding: 26px 24px 22px; background: var(--panel); color: var(--ink); border: 1px solid var(--line); border-radius: 16px; }
+.m-panel.wide { width: min(560px, 100%); }
+.m-close { position: absolute; top: 10px; right: 10px; display: grid; place-items: center; width: 32px; height: 32px; padding: 0; border: 0; border-radius: 8px; background: transparent; color: var(--soft); cursor: pointer; }
+.m-close:hover { background: var(--tile-hover); }
+.m-close svg { width: 15px; height: 15px; }
+.m-head { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; padding-right: 30px; }
+.m-icon { flex: none; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; background: color-mix(in srgb, var(--accent) 18%, transparent); color: var(--accent); }
+.m-icon svg { width: 22px; height: 22px; }
+.m-title { margin: 0; font-family: var(--f-display); font-size: 21px; line-height: 1.2; }
+.m-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.m-note { color: var(--soft); font-size: 13.5px; line-height: 1.5; margin: 0; }
+
+.form { display: flex; flex-direction: column; gap: 14px; }
+.field { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.field > label, .field > .lbl { font-family: var(--f-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--soft); }
+.field input[type="text"], .field input[type="number"], .field select { width: 100%; padding: 9px 12px; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; }
+.field input[type="file"] { font-size: 13px; color: var(--soft); max-width: 100%; }
+.field .hint { font-size: 12px; color: var(--soft); }
+.err { margin: 0; padding: 8px 12px; border: 1px solid var(--danger); border-radius: 8px; color: var(--danger); font-size: 13.5px; }
+.swatches { display: flex; flex-wrap: wrap; gap: 8px; }
+.sw { position: relative; cursor: pointer; }
+.sw span { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 10px; border: 2px solid var(--line); }
+.sw.col span { background: var(--c); }
+.sw.ico span { background: var(--tile); color: var(--ink); }
+.sw.ico svg { width: 20px; height: 20px; }
+.sw input:checked + span { border-color: var(--accent); box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 35%, transparent); }
+.sw input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* cart */
+.lines { display: flex; flex-direction: column; gap: 8px; }
+.line { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; align-items: center; padding: 10px 12px; background: var(--tile); border: 1px solid var(--line); border-radius: 10px; }
+.line .ln { font-weight: 600; overflow-wrap: anywhere; }
+.line .lt { font-family: var(--f-mono); font-size: 12px; color: var(--soft); }
+.line .lp { font-family: var(--f-mono); font-weight: 500; color: var(--accent); text-align: right; font-variant-numeric: tabular-nums; }
+.qty { display: inline-flex; align-items: center; gap: 4px; }
+.qty button { width: 28px; height: 28px; padding: 0; border: 1px solid var(--line); border-radius: 7px; background: transparent; cursor: pointer; }
+.qty button:hover { background: var(--tile-hover); }
+.qty b { min-width: 26px; text-align: center; font-family: var(--f-mono); font-weight: 500; font-variant-numeric: tabular-nums; }
+.rm { background: none; border: 0; padding: 0; color: var(--soft); font-size: 12px; text-decoration: underline; cursor: pointer; justify-self: end; }
+.total { display: flex; justify-content: space-between; align-items: baseline; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
+.total span { font-family: var(--f-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--soft); }
+.total strong { font-family: var(--f-display); font-size: 24px; color: var(--accent); font-variant-numeric: tabular-nums; }
+
+#toast { position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); transform: translate(-50%, 20px); z-index: 300; max-width: calc(100% - 32px); padding: 10px 16px; background: var(--ink); color: var(--bg); border-radius: 10px; font-weight: 600; font-size: 14px; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; }
+#toast.show { opacity: 1; transform: translate(-50%, 0); }
+#toast { text-align: center; max-width: min(680px, calc(100% - 32px)); }
+#toast.err { background: var(--danger); color: #fff; }
+#toast.warn { background: var(--accent); color: var(--on-accent); }
+
+.lock-ico { width: 22px; height: 22px; }
+.pw-hint { font-size: 12px; color: var(--soft); margin: 0; }
+#saveState { font-family: var(--f-mono); }
+@media (max-width: 760px) {
+  .date { display: none; }
+  .search { flex: 1 1 100%; }
+  .quote h2, .q-nav { display: none; }
+  .s-meta kbd { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .dot, .q-bar { animation: none; } .modal, #toast { transition: none; } }
+
+/* ===== bookshelf layout: every category is a shelf, every type is a book spine ===== */
+.board { display: grid; grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr)); gap: 12px 24px; align-content: start; --u: 1; padding: 6px 2px 2px; }
+.shelf { --hue: var(--h1); min-width: 0; }
+.shelf h2 { display: flex; align-items: center; gap: 8px; margin: 0 0 6px; min-height: 26px; font-family: var(--f-display); font-size: 14.5px; font-weight: 700; }
+.shelf h2 .cico { flex: none; width: 24px; height: 24px; padding: 4px; border-radius: 7px; background: var(--hue); color: var(--on-hue); }
+.shelf h2 .nm { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.shelf h2 small { margin-left: auto; flex: none; font-family: var(--f-mono); font-size: 11px; font-weight: 400; color: var(--soft); }
+.bk-controls { display: flex; align-items: center; gap: 4px; flex: none; margin-left: 2px; }
+.bk-arrow { display: grid; place-items: center; flex: none; width: 27px; height: 24px; padding: 0; border: 1px solid color-mix(in srgb, var(--hue) 38%, var(--line)); border-radius: 6px; background: transparent; color: var(--ink); font: 16px/1 var(--f-body); cursor: pointer; transition: background .15s, border-color .15s; }
+.bk-arrow:hover:not(:disabled) { background: color-mix(in srgb, var(--hue) 10%, transparent); border-color: var(--hue); }
+.bk-arrow:disabled { opacity: .35; cursor: default; }
+.bk-arrow:focus-visible { outline: 2px solid var(--hue); outline-offset: 2px; }
+.shelf .del-cat { margin: 0; flex: none; border-color: var(--danger); background: var(--tile); color: var(--danger); }
+.fav-x { flex: none; height: 24px; padding: 0 9px; border: 1px solid var(--line); border-radius: 6px; background: transparent; color: var(--soft); font-family: var(--f-mono); font-size: 11px; cursor: pointer; }
+.fav-x:hover { color: var(--ink); border-color: var(--hue); }
+.bk { display: flex; align-items: flex-end; gap: 5px; height: calc(235px * var(--u)); padding: 0 calc(11px * var(--u)); border-bottom: 8px solid var(--plank); border-radius: 2px; background: linear-gradient(to top, color-mix(in srgb, var(--hue) 7%, transparent), transparent 70%); overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: contain; scrollbar-width: none; -ms-overflow-style: none; scroll-behavior: smooth; }
+.sp { position: relative; flex: 0 0 44px; min-width: 44px; width: 44px; height: calc(var(--sh) * var(--u)); display: flex; align-items: center; justify-content: center; padding: calc(26px * var(--u)) 0 calc(4px * var(--u)); border: 0; border-radius: 4px 4px 0 0; overflow: hidden; color: var(--on-hue); cursor: pointer; transform-origin: bottom center;
+  background-color: color-mix(in srgb, var(--hue) var(--m, 100%), var(--spine-mix));
+  background-image: linear-gradient(90deg, rgba(0,0,0,.08), transparent 35%, rgba(255,255,255,.12) 62%, rgba(0,0,0,.10));
+  transition: transform .2s ease, box-shadow .2s; }
+.sp::before { content: ""; position: absolute; left: 0; right: 0; top: calc(10px * var(--u)); height: 4px; background: color-mix(in srgb, var(--on-hue) 40%, transparent); box-shadow: 0 calc(8px * var(--u)) 0 color-mix(in srgb, var(--on-hue) 40%, transparent); }
+.sp .sn { writing-mode: vertical-rl; white-space: nowrap; font-family: var(--f-body); font-weight: 700; font-size: calc(var(--label-size, 18px) * var(--u)); line-height: 1; letter-spacing: .025em; }
+/* Scrollbars stay hidden; compact shelf-header arrows reveal more books. */
+.sp:hover, .sp:focus-visible { transform: translateY(-10px); box-shadow: 0 8px 16px color-mix(in srgb, var(--hue) 22%, transparent); }
+.sp:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.sp .del { top: 3px; right: auto; left: 50%; transform: translateX(-50%); z-index: 2; }
+.sp.add-sp { background: transparent; border: 2px dashed var(--line); border-bottom: 0; color: var(--soft); }
+.sp.add-sp::before { display: none; }
+.none { align-self: center; padding: 0 8px 20px; color: var(--soft); }
+.bk::-webkit-scrollbar { display: none; width: 0; height: 0; }
+@media (prefers-reduced-motion: reduce) { .sp { transition: none; } }
+
+/* ===== header: wooden shelf sign ===== */
+.top { background: linear-gradient(180deg, #4d3724, #3a2819); border: 1px solid #2a1d12; border-bottom: 10px solid #8a6a4a; border-radius: 6px 6px 2px 2px; box-shadow: 0 8px 0 -3px rgba(0, 0, 0, .25); padding: 10px 16px 8px; color: #f7ead9; }
+.top .brand h1 { color: #f7ead9; font-size: 24px; letter-spacing: .01em; text-shadow: 0 2px 0 rgba(0, 0, 0, .35); }
+.top .brand p { color: #d9c2a3; letter-spacing: .22em; }
+.top .mark { border-radius: 4px; box-shadow: 0 0 0 3px #8a6a4a, 0 3px 0 3px rgba(0, 0, 0, .3); }
+.top .search input { background: rgba(0, 0, 0, .3); border-color: #6b5039; color: #f7ead9; border-radius: 4px; }
+.top .search input::placeholder, .top .s-meta, .top .s-meta kbd, .top .date, .top .live { color: #d9c2a3; }
+.top .s-meta kbd { border-color: #6b5039; }
+.top .s-clear { background: rgba(255, 255, 255, .14); color: #f7ead9; }
+.top .time { color: #ffd98a; }
+.top .btn, .top .theme-btn { color: #f7ead9; border-color: #8a6a4a; border-radius: 4px; }
+.top .btn:hover, .top .theme-btn:hover { background: rgba(255, 255, 255, .12); }
+.top .btn.primary { background: #ffd98a; color: #2a1d12; border-color: transparent; }
+.top .btn[aria-pressed="true"] { color: #ffd98a; border-color: #ffd98a; }
+.top .badge { background: #ffd98a; color: #2a1d12; }
+/* brass shelf plaques replace the clock */
+.hstats { display: flex; align-items: center; gap: 10px; }
+.hs { display: flex; flex-direction: column; align-items: center; min-width: 74px; padding: 4px 12px 5px; border-radius: 3px; background: linear-gradient(180deg, #f0d596, #b88f4a); color: #2a1d12; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .35), 0 2px 0 rgba(0, 0, 0, .35); }
+.hs b { font-family: var(--f-display); font-size: 21px; font-weight: 800; line-height: 1.05; font-variant-numeric: tabular-nums; }
+.hs i { font-style: normal; font-family: var(--f-mono); font-size: 9.5px; letter-spacing: .16em; text-transform: uppercase; opacity: .8; }
+@media (max-width: 760px) { .hs { min-width: 62px; } }
+
+/* ===== v2: library header with a row of books standing on the plank ===== */
+.top { padding: 14px 18px 14px; row-gap: 12px; }
+.top .brand h1 { font-size: 30px; font-weight: 800; letter-spacing: 0; color: #fff3d6; text-shadow: 0 2px 0 rgba(0, 0, 0, .4), 0 0 18px rgba(255, 217, 138, .25); }
+.top .brand p { font-size: 11px; color: #ffd98a; }
+.top .mark { width: 46px; height: 46px; }
+.top .search input { background: #f4e8cc; color: #2a1d12; border: 2px solid #b88f4a; border-radius: 3px; box-shadow: inset 0 2px 4px rgba(0, 0, 0, .18); }
+.top .search input::placeholder { color: #7a6240; font-style: italic; }
+.top .search .s-meta, .top .search .s-meta kbd { color: #6b5034; border-color: #b88f4a; }
+.top .s-clear { background: rgba(0, 0, 0, .12); color: #2a1d12; }
+.spines { order: 99; flex: 0 0 100%; display: flex; align-items: flex-end; gap: 3px; height: 30px; margin: 0 -18px; padding: 0 18px; overflow: hidden; }
+.spines i { flex: 0 0 auto; display: block; width: 15px; height: 22px; border-radius: 2px 2px 0 0; background: var(--h1); box-shadow: inset -3px 0 0 rgba(0, 0, 0, .25), inset 2px 0 0 rgba(255, 255, 255, .2), inset 0 6px 0 -3px rgba(255, 255, 255, .35); }
+.spines i:nth-child(6n+2) { background: var(--h2); }
+.spines i:nth-child(6n+3) { background: var(--h3); }
+.spines i:nth-child(6n+4) { background: var(--h4); }
+.spines i:nth-child(6n+5) { background: var(--h5); }
+.spines i:nth-child(6n) { background: var(--h6); }
+.spines i:nth-child(4n+1) { height: 28px; width: 12px; }
+.spines i:nth-child(5n+3) { height: 18px; width: 18px; }
+.spines i:nth-child(7n+4) { height: 25px; }
+.spines i:nth-child(11n+6) { transform: none; margin: 0; }
+@media (max-width: 760px) { .top { padding: 12px 14px 12px; } .top .brand h1 { font-size: 24px; } .spines { margin: 0 -14px; padding: 0 14px; } }
+
+/* ===== v3: long names, 40-char descriptions, Edge badge ===== */
+.shelf h2 .nm { white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; line-height: 1.15; overflow: hidden; }
+.sp.sp-edge { padding-bottom: calc(30px * var(--u)); }
+.sp .se { position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); width: 20px; height: 20px; border-radius: 50%; background: var(--on-hue); color: var(--hue); font: 700 11px/20px var(--f-mono); text-align: center; }
+#tip { position: fixed; z-index: 150; left: 0; top: 0; width: max-content; max-width: min(300px, calc(100vw - 16px)); padding: 12px 14px 11px; background: var(--ink); color: var(--bg); border-radius: 10px; box-shadow: 0 10px 28px rgba(15, 23, 42, .35); pointer-events: none; opacity: 0; transform: translateY(4px); transition: opacity .15s, transform .15s; }
+#tip.on { opacity: 1; transform: none; }
+#tip b { display: block; font-family: var(--f-display); font-size: 14.5px; line-height: 1.25; }
+#tip p { margin: 5px 0 0; font-size: 13px; line-height: 1.35; opacity: .88; }
+#tip .tg { display: inline-block; margin-top: 9px; padding: 2px 8px; border-radius: 999px; font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .04em; background: color-mix(in srgb, var(--bg) 20%, transparent); }
+#tip .tg.ed { background: #ffd98a; color: #2a1d12; }
+#tip i { display: block; margin-top: 7px; font-style: normal; font-size: 11px; opacity: .6; }
+@media (prefers-reduced-motion: reduce) { #tip { transition: none; } }
+
+/* ===== light palette: medium-light book spines, light tooltip (header unchanged; light theme only) ===== */
+/* shelves: pastel book spines with dark tinted lettering */
+:root:not([data-theme="dark"]) .sp { background-color: color-mix(in srgb, var(--hue) calc(var(--m, 100%) * .62), #ffffff); background-image: linear-gradient(90deg, rgba(0,0,0,.03), transparent 35%, rgba(255,255,255,.35) 62%, rgba(0,0,0,.04)); color: color-mix(in srgb, var(--hue) 30%, #0f172a); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--hue) 40%, #fff); }
+:root:not([data-theme="dark"]) .sp::before { background: color-mix(in srgb, var(--hue) 55%, transparent); box-shadow: 0 calc(8px * var(--u)) 0 color-mix(in srgb, var(--hue) 55%, transparent); }
+:root:not([data-theme="dark"]) .sp:hover, :root:not([data-theme="dark"]) .sp:focus-visible { background-color: color-mix(in srgb, var(--hue) 78%, #ffffff); box-shadow: 0 8px 16px color-mix(in srgb, var(--hue) 22%, transparent), inset 0 0 0 1px color-mix(in srgb, var(--hue) 35%, #fff); }
+:root:not([data-theme="dark"]) .sp .se { background: #ffffff; border: 1px solid color-mix(in srgb, var(--hue) 40%, #fff); }
+:root:not([data-theme="dark"]) .sp.add-sp { background: transparent; box-shadow: none; }
+
+/* tooltip */
+:root:not([data-theme="dark"]) #tip { background: #ffffff; color: var(--ink); border: 1px solid var(--line); box-shadow: 0 10px 28px rgba(15, 23, 42, .14); }
+:root:not([data-theme="dark"]) #tip .tg { background: #eef2f8; color: var(--ink); }
+:root:not([data-theme="dark"]) #tip .tg.ed { background: #fdeab0; color: #3a2819; }
+</style>
+
+<a class="skip" href="#board">Skip to products</a>
+<div class="app-shell">
+  <header class="top">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 38 38" aria-hidden="true">
+        <rect width="38" height="38" rx="9" fill="#2dd4bf"/>
+        <path d="M8 28V10l11 11 11-11v18" fill="none" stroke="#100c22" stroke-width="3.4" stroke-linejoin="round" stroke-linecap="round"/>
+      </svg>
+      <div>
+        <h1>Apps Works Store</h1>
+        <p>The shelf · every type a spine</p>
+      </div>
+    </div>
+    <div class="search">
+      <label class="sr-only" for="q">Search types or categories</label>
+      <input id="q" type="search" placeholder="Search the card catalogue" autocomplete="off" spellcheck="false">
+      <span class="s-meta">
+        <span id="resultCount" role="status" aria-live="polite"></span>
+        <kbd aria-hidden="true">/</kbd>
+        <button class="s-clear" id="sClear" type="button" aria-label="Clear search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      </span>
+    </div>
+    <div class="hstats" role="group" aria-label="Catalogue summary">
+
+    </div>
+    <div class="actions">
+      <button class="btn sm primary" id="addProductBtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Add product</button>
+      <button class="btn sm" id="cartBtn" type="button" aria-label="Open cart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h2l2.4 11h10.2L20 7H6"/><circle cx="9" cy="19.5" r="1.4"/><circle cx="17" cy="19.5" r="1.4"/></svg>Cart <span class="badge" id="cartCount">0</span></button>
+      <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch colour theme">Theme</button>
+    </div>
+  </header>
+
+
+  <main class="board" id="board"></main>
+  <div class="empty" id="empty" hidden>
+    <h3 id="emptyTitle">No products match your search</h3>
+    <p id="emptyText">Try a different keyword.</p>
+    <button class="btn" type="button" id="emptyReset">Clear search</button>
+  </div>
+
+  <footer class="foot">
+    <span><strong>&copy; 2026 Apps Works Pvt Ltd</strong> &middot; <span id="footCount"></span></span>
+    <span><span id="adminTools" hidden><button class="link" type="button" id="pwBtn">Change password</button> &middot; <button class="link" type="button" id="fileBtn">Change Save Location</button> &middot; </span><span>Catalogue is embedded in this HTML file</span> &middot; <button class="link" type="button" id="resetBtn">Reset to default data</button> &middot; <span class="m">v9.3.0</span></span>
+  </footer>
+</div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script type="application/json" id="store-data">
+{
+ "version": 1,
+ "initialized": true,
+ "updated": "2026-10-27T09:30:00.000Z",
+ "adminHash": "f4082f0417b1ed72490e1ba014fd3c38356649eb0c0d94e211fa4e00764e1fe3",
+ "categories": [
+  {
+   "id": "electronics",
+   "name": "Electronics",
+   "hue": 1,
+   "icon": 1,
+   "types": [
+    "Mobiles",
+    "Audio",
+    "Laptops",
+    "Headphones",
+    "PCs",
+    "Earbuds",
+    "TVs",
+    "Powerbanks",
+    "Camera",
+    "Smartwatch",
+    "Storage",
+    "Gaming"
+   ],
+   "products": [],
+   "title": "Electronics, Computers & Smart Gadgets",
+   "typeInfo": {
+    "Laptops": {
+     "title": "Laptops, Notebooks & Ultrabooks for Work and Study",
+     "desc": "Slim, light, powerful portable computers",
+     "edge": true
+    },
+    "Mobiles": {
+     "title": "Mobiles & Smartphones with Fast 5G Support",
+     "desc": "Latest 5G smartphones with great cameras"
+    },
+    "Headphones": {
+     "title": "Wireless & Wired Over-Ear Headphones",
+     "desc": "Over-ear sound with deep bass & comfort."
+    },
+    "PCs": {
+     "title": "Desktop PCs, Towers & All-in-One Computers",
+     "desc": "Desktop towers and all-in-one computers.",
+     "edge": true
+    },
+    "Gaming": {
+     "title": "Gaming Consoles, Controllers & Accessories",
+     "desc": "Consoles, controllers, headsets & games.",
+     "edge": true
+    },
+    "Storage": {
+     "title": "Storage Drives, SSDs & Memory Cards",
+     "desc": "SSDs, hard drives and memory cards deals",
+     "edge": true
+    },
+    "Smartwatch": {
+     "title": "Smartwatches, Trackers & Fitness Bands",
+     "desc": "Fitness bands and smart wearable watches",
+     "edge": true
+    }
+   }
+  },
+  {
+   "id": "fashion",
+   "name": "Fashion",
+   "hue": 5,
+   "icon": 2,
+   "types": [
+    "Men",
+    "Women",
+    "Footwear",
+    "Grooming",
+    "Perfumes",
+    "Beauty",
+    "Kids"
+   ],
+   "products": [],
+   "title": "Fashion, Beauty & Personal Grooming Essentials",
+   "typeInfo": {
+    "Footwear": {
+     "title": "Footwear for Sports, Casual & Formal Wear",
+     "desc": "Sports, casual and formal shoes for all."
+    }
+   }
+  },
+  {
+   "id": "home",
+   "name": "Home & Kitchen",
+   "hue": 2,
+   "icon": 3,
+   "types": [
+    "Cookware",
+    "Appliances",
+    "Decor",
+    "Chimney",
+    "Accessories"
+   ],
+   "products": [],
+   "title": "Home, Kitchen & Everyday Living Essentials",
+   "typeInfo": {
+    "Cookware": {
+     "title": "Cookware & Kitchen Cooking Essentials",
+     "desc": "Non-stick pans, pots, and kitchen tools."
+    }
+   }
+  },
+  {
+   "id": "grocery",
+   "name": "Grocery",
+   "hue": 4,
+   "icon": 4,
+   "types": [
+    "Staples",
+    "Snacks",
+    "Beverages"
+   ],
+   "products": [],
+   "title": "Grocery, Staples & Daily Food Supplies",
+   "typeInfo": {
+    "Staples": {
+     "title": "Daily Staples, Grains, Pulses & Cooking Basics",
+     "desc": "Rice, flour, pulses, and cooking basics."
+    }
+   }
+  },
+  {
+   "id": "books",
+   "name": "Books & Stationery",
+   "hue": 3,
+   "icon": 5,
+   "types": [
+    "Novels",
+    "Stationery"
+   ],
+   "products": []
+  },
+  {
+   "id": "sports",
+   "name": "Sports & Fitness",
+   "hue": 0,
+   "icon": 6,
+   "types": [
+    "Fitness",
+    "Indoor",
+    "Outdoor"
+   ],
+   "products": [],
+   "title": "Sports, Fitness & Outdoor Adventure Gear",
+   "typeInfo": {
+    "Fitness": {
+     "title": "Fitness & Home Workout Equipment",
+     "desc": "Dumbbells, yoga mats, and home workouts!"
+    }
+   }
+  },
+  {
+   "id": "ia7sj6y",
+   "name": "Appliances",
+   "hue": 2,
+   "icon": 3,
+   "types": [
+    "Refrigerator",
+    "Washing Machine"
+   ],
+   "products": [],
+   "title": "Large Home Appliances & Electrical Goods",
+   "typeInfo": {
+    "Refrigerator": {
+     "title": "Refrigerators & Home Cooling Appliances",
+     "desc": "Single and double-door cooling for homes"
+    }
+   }
+  },
+  {
+   "id": "bnc3vyi",
+   "name": "Daily Needs",
+   "hue": 1,
+   "icon": 0,
+   "types": [
+    "Home Care",
+    "Groceries",
+    "Nutrition"
+   ],
+   "products": []
+  }
+ ]
+}
+</script>
+<script>
+const CART_KEY = "aw-cart-v1";
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s).replace(/[&<>"]/g, (m) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[m]));
+const uid = () => Math.random().toString(36).slice(2, 9);
+const inr = new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 });
+const store = {
+  get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch (e) { return false; } }
+};
+const svg = (inner, cls) => `<svg class="${cls || ""}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${inner}</svg>`;
+
+/* category icons: a category stores the index of one of these */
+const CAT_ICONS = [
+  '<path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>',
+  '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 21h8M12 16v5"/>',
+  '<path d="M8 4l-5 3 2.5 4L8 10v10h8V10l2.5 1L21 7l-5-3c-.5 1.5-2 2.5-4 2.5S8.5 5.5 8 4z"/>',
+  '<path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10M10 20v-6h4v6"/>',
+  '<path d="M3 10h18l-2 10H5z"/><path d="M8 10l3-6M16 10l-3-6"/>',
+  '<path d="M12 6c-2-1.5-5-2-9-2v14c4 0 7 .5 9 2 2-1.5 5-2 9-2V4c-4 0-7 .5-9 2zM12 6v14"/>',
+  '<path d="M6 8v8M3 10v4M18 8v8M21 10v4M6 12h12"/>',
+  '<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>'
+];
+const ICON_PLUS = '<path d="M12 5v14M5 12h14"/>';
+const ICON_CART = '<path d="M3 4h2l2.4 11h10.2L20 7H6"/><circle cx="9" cy="19.5" r="1.4"/><circle cx="17" cy="19.5" r="1.4"/>';
+const ICON_X = '<path d="M6 6l12 12M18 6L6 18"/>';
+
+/* ---- Data lives inside this HTML file (the #store-data block above). Admin edits rewrite that block. ----
+   Development: set "initialized": false and "categories": [] in #store-data and the page auto-loads store-data.json
+   (kept next to this file, needs http/https). Otherwise the embedded data is used, so it also works by double-click. */
+const AUTH_WINDOW_MS = 0;   // 0 = ask for the admin password every time (Manage, add, remove). Set e.g. 5 * 60 * 1000 to stay unlocked for 5 minutes
+const SALT = "aw-store|";
+
+function sha256(msg) {
+  const rotr = (x, n) => (x >>> n) | (x << (32 - n));
+  const bytes = Array.from(new TextEncoder().encode(msg));
+  const len = bytes.length;
+  bytes.push(0x80);
+  while (bytes.length % 64 !== 56) bytes.push(0);
+  const hi = Math.floor(len * 8 / 4294967296), lo = (len * 8) >>> 0;
+  for (let i = 3; i >= 0; i--) bytes.push((hi >>> (i * 8)) & 255);
+  for (let i = 3; i >= 0; i--) bytes.push((lo >>> (i * 8)) & 255);
+  const K = [], H = [];
+  let n = 0;
+  for (let c = 2; n < 64; c++) {
+    let prime = true;
+    for (let d = 2; d * d <= c; d++) if (c % d === 0) { prime = false; break; }
+    if (!prime) continue;
+    if (n < 8) H[n] = (Math.pow(c, 1 / 2) % 1 * 4294967296) | 0;
+    K[n++] = (Math.pow(c, 1 / 3) % 1 * 4294967296) | 0;
+  }
+  for (let i = 0; i < bytes.length; i += 64) {
+    const w = new Array(64);
+    for (let t = 0; t < 16; t++) w[t] = (bytes[i + 4 * t] << 24) | (bytes[i + 4 * t + 1] << 16) | (bytes[i + 4 * t + 2] << 8) | bytes[i + 4 * t + 3];
+    for (let t = 16; t < 64; t++) {
+      const s0 = rotr(w[t - 15], 7) ^ rotr(w[t - 15], 18) ^ (w[t - 15] >>> 3);
+      const s1 = rotr(w[t - 2], 17) ^ rotr(w[t - 2], 19) ^ (w[t - 2] >>> 10);
+      w[t] = (w[t - 16] + s0 + w[t - 7] + s1) | 0;
+    }
+    let [a, b, c, d, e, f, g, h] = H;
+    for (let t = 0; t < 64; t++) {
+      const S1 = rotr(e, 6) ^ rotr(e, 11) ^ rotr(e, 25);
+      const ch = (e & f) ^ (~e & g);
+      const t1 = (h + S1 + ch + K[t] + w[t]) | 0;
+      const S0 = rotr(a, 2) ^ rotr(a, 13) ^ rotr(a, 22);
+      const maj = (a & b) ^ (a & c) ^ (b & c);
+      const t2 = (S0 + maj) | 0;
+      h = g; g = f; f = e; e = (d + t1) | 0; d = c; c = b; b = a; a = (t1 + t2) | 0;
+    }
+    const v = [a, b, c, d, e, f, g, h];
+    for (let t = 0; t < 8; t++) H[t] = (H[t] + v[t]) | 0;
+  }
+  return H.map((x) => (x >>> 0).toString(16).padStart(8, "0")).join("");
+}
+const hashPw = (p) => sha256(SALT + p);
+
+function seed() {
+  return [
+    { id: "electronics", name: "Electronics", hue: 1, icon: 1, types: ["Mobiles", "Audio", "Laptops"], products: [] },
+    { id: "fashion", name: "Fashion", hue: 5, icon: 2, types: ["Men", "Women", "Footwear"], products: [] },
+    { id: "home", name: "Home & Kitchen", hue: 2, icon: 3, types: ["Cookware", "Appliances", "Decor"], products: [] },
+    { id: "grocery", name: "Grocery", hue: 4, icon: 4, types: ["Staples", "Snacks", "Beverages"], products: [] },
+    { id: "books", name: "Books & Stationery", hue: 3, icon: 5, types: ["Novels", "Stationery"], products: [] },
+    { id: "sports", name: "Sports & Fitness", hue: 0, icon: 6, types: ["Fitness", "Outdoor"], products: [] }
+  ];
+}
+
+/* every type belongs to exactly one category: duplicates (case-insensitive) are dropped on load */
+function normalize(j) {
+  const cats = Array.isArray(j && j.categories) ? j.categories : [];
+  const seen = new Set();
+  cats.forEach((c) => {
+    c.products = Array.isArray(c.products) ? c.products : [];
+    c.types = (Array.isArray(c.types) ? c.types : []).filter((t) => { const k = String(t).toLowerCase(); if (seen.has(k)) return false; seen.add(k); return true; });
+  });
+  return { version: 1, initialized: !!(j && j.initialized), updated: (j && j.updated) || "", adminHash: (j && j.adminHash) || hashPw("admin123"), categories: cats };
+}
+function loadEmbedded() {
+  let j = null;
+  try { j = JSON.parse($("#store-data").textContent); } catch (e) { j = null; }
+  const base = normalize(j);
+  /* a newer automatic save kept by this browser wins over the data embedded in the file */
+  try {
+    const l = JSON.parse(localStorage.getItem("aw-store-data"));
+    if (l && Array.isArray(l.categories) && (l.updated || "") > (base.updated || "")) return normalize(Object.assign({}, l, { initialized: true }));
+  } catch (e) { /* ignore */ }
+  return base;
+}
+async function fetchDefaultJson() {
+  try {
+    const r = await fetch("store-data.json", { cache: "no-store" });
+    if (!r.ok) return null;
+    const j = normalize(await r.json());
+    return j.categories.length ? j : null;
+  } catch (e) { return null; }
+}
+const typeOwner = (t) => DATA.find((c) => c.types.some((x) => x.toLowerCase() === String(t).trim().toLowerCase()));
+
+/* ---- admin password gate ---- */
+const ICON_LOCK = '<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>';
+let authUntil = 0, fails = 0, lockUntil = 0;
+function requireAdmin(cb) {
+  if (Date.now() < authUntil) { cb(); return; }
+  openModal("Admin password", ICON_LOCK, (api) => {
+    api.body.innerHTML = `<form class="form" novalidate>
+      <p class="m-note">Enter the admin password to add or remove categories and types.</p>
+      <div class="field"><label for="ap-pw">Password</label><input id="ap-pw" type="password" autocomplete="current-password"></div>
+      <p class="err" role="alert" hidden></p>
+      <div class="m-actions"><button class="btn primary" type="submit">Unlock</button><button class="btn" type="button" data-cancel>Cancel</button></div></form>`;
+    const err = api.body.querySelector(".err"), inp = api.body.querySelector("#ap-pw");
+    api.body.querySelector("[data-cancel]").addEventListener("click", api.close);
+    api.body.querySelector("form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      if (Date.now() < lockUntil) { err.textContent = "Too many wrong attempts. Try again in a few seconds."; err.hidden = false; return; }
+      if (hashPw(inp.value) === DB.adminHash) {
+        fails = 0; authUntil = AUTH_WINDOW_MS ? Date.now() + AUTH_WINDOW_MS : 0;
+        api.close(); cb();
+      } else {
+        fails++; if (fails >= 5) { lockUntil = Date.now() + 30000; fails = 0; }
+        err.textContent = "Incorrect password."; err.hidden = false; inp.value = ""; inp.focus();
+      }
+    });
+  });
+}
+function changePassword() {
+  requireAdmin(() => openModal("Change password", ICON_LOCK, (api) => {
+    api.body.innerHTML = `<form class="form" novalidate>
+      <div class="field"><label for="np-1">New password</label><input id="np-1" type="password" autocomplete="new-password"><span class="hint">At least 6 characters.</span></div>
+      <div class="field"><label for="np-2">Repeat new password</label><input id="np-2" type="password" autocomplete="new-password"></div>
+      <p class="err" role="alert" hidden></p>
+      <div class="m-actions"><button class="btn primary" type="submit">Save password</button><button class="btn" type="button" data-cancel>Cancel</button></div></form>`;
+    const err = api.body.querySelector(".err");
+    api.body.querySelector("[data-cancel]").addEventListener("click", api.close);
+    api.body.querySelector("form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const a = api.body.querySelector("#np-1").value, b = api.body.querySelector("#np-2").value;
+      if (a.length < 6) { err.textContent = "Use at least 6 characters."; err.hidden = false; return; }
+      if (a !== b) { err.textContent = "The two passwords do not match."; err.hidden = false; return; }
+      DB.adminHash = hashPw(a); api.close(); saveData(); toast("Admin password changed");
+    });
+  }));
+}
+
+/* ---- Saving ----
+   Two different things, never mixed up:
+   1) browser storage = a convenience copy in this browser only;
+   2) the real HTML file = rewritten only after "Enable Automatic Saving" + write permission, and only reported as
+      updated after the new content has been validated, written and read back successfully. */
+const idb = {
+  open() { return new Promise((res, rej) => { const r = indexedDB.open("aw-store-fs", 1); r.onupgradeneeded = () => r.result.createObjectStore("h"); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); }); },
+  async get(k) { try { const d = await this.open(); return await new Promise((res) => { const q = d.transaction("h").objectStore("h").get(k); q.onsuccess = () => res(q.result || null); q.onerror = () => res(null); }); } catch (e) { return null; } },
+  async set(k, v) { try { const d = await this.open(); return await new Promise((res) => { const t = d.transaction("h", "readwrite"); t.objectStore("h").put(v, k); t.oncomplete = () => res(true); t.onerror = () => res(false); t.onabort = () => res(false); }); } catch (e) { return false; } }
+};
+const supportsFS = () => typeof window.showOpenFilePicker === "function" && typeof indexedDB !== "undefined";
+let fileHandle = null, saving = false, pendingSave = false;
+const hhmmss = () => new Date().toLocaleTimeString("en-GB");
+const errMsg = (e) => (e && e.message) ? e.message : String(e);
+const BTN_ENABLE = "Enable Automatic Saving", BTN_RE = "Re-enable Automatic Saving";
+const NOT_UPDATED = "The HTML file was NOT updated";
+const UNSUPPORTED = "this browser cannot update the HTML file automatically (use Chrome or Edge on the computer that holds the file)";
+
+/* results are shown as a message; "busy" steps need no message */
+let lastStatus = { kind: "", msg: "" };
+function setStatus(kind, msg) { if (kind === "busy") return; lastStatus = { kind, msg }; toast(msg, kind === "ok" ? 4500 : 10000, kind); }
+function dataJson() {
+  DB.categories = DATA; DB.initialized = true; DB.updated = new Date().toISOString();
+  return JSON.stringify(DB, null, 1).replace(/</g, "\\u003c");
+}
+const BLOCK_RE = /(<script type="application\/json" id="store-data">)([\s\S]*?)(<\/script>)/;
+function replaceDataBlock(html, json) {
+  if (!BLOCK_RE.test(html)) return null;
+  return html.replace(BLOCK_RE, (m, a, b, c) => a + "\n" + json + "\n" + c);
+}
+function extractBlock(html) {
+  const m = html.match(BLOCK_RE); if (!m) return null;
+  try { return JSON.parse(m[2]); } catch (e) { return null; }
+}
+function cacheLocal(json) { try { localStorage.setItem("aw-store-data", json); return true; } catch (e) { return false; } }
+const browserNote = (ok) => ok ? "Changes are saved in this browser only." : "Browser storage is also unavailable, so changes will be lost when this page is closed.";
+
+async function ensurePerm(h, ask) {
+  let p = "prompt";
+  try { p = await h.queryPermission({ mode: "readwrite" }); } catch (e) { return false; }
+  if (p !== "granted" && ask) { try { p = await h.requestPermission({ mode: "readwrite" }); } catch (e) { /* needs a user click */ } }
+  return p === "granted";
+}
+/* validates first, writes through the browser's swap file (the old content stays until close() succeeds), then reads back */
+async function writeFile(h, json) {
+  const text = await (await h.getFile()).text();
+  if (!/Apps Works Store/.test(text)) throw new Error("the selected file is not the Apps Works Store HTML");
+  const out = replaceDataBlock(text, json);
+  if (!out) throw new Error("the selected file has no catalogue data block");
+  const chk = extractBlock(out);
+  if (!chk || !Array.isArray(chk.categories) || chk.updated !== DB.updated || !/<\/html>\s*$/i.test(out)) throw new Error("the new content failed validation, so nothing was written");
+  let w = null;
+  try { w = await h.createWritable(); await w.write(out); await w.close(); }
+  catch (e) { try { if (w) await w.abort(); } catch (x) { /* ignore */ } throw e; }
+  const back = await (await h.getFile()).text();
+  if (back !== out) {
+    let restored = false;
+    try { const r = await h.createWritable(); await r.write(text); await r.close(); restored = true; } catch (x) { /* ignore */ }
+    const err = new Error("the file could not be verified after writing" + (restored ? " and the previous content was restored" : "; please check the file"));
+    err.keepNote = true; throw err;
+  }
+}
+async function runSave() {
+  const json = dataJson();
+  const cached = cacheLocal(json);
+  const note = browserNote(cached);
+  if (!supportsFS()) { setStatus("warn", NOT_UPDATED + ": " + UNSUPPORTED + ". " + note); return; }
+  if (!fileHandle) fileHandle = await idb.get("file");
+  if (!fileHandle) { setStatus("warn", NOT_UPDATED + ": automatic saving is not enabled yet. " + note + " Click Enable Automatic Saving once to select the file.", BTN_ENABLE); return; }
+  if (!(await ensurePerm(fileHandle, true))) { setStatus("warn", NOT_UPDATED + ": permission to edit it was not granted. " + note, BTN_RE); return; }
+  setStatus("busy", "Writing the catalogue into the HTML file...");
+  try {
+    await writeFile(fileHandle, json);
+    setStatus("ok", "HTML file updated and verified at " + hhmmss() + ". The latest catalogue is embedded in the file.");
+  } catch (e) {
+    if (/not the Apps Works Store|no catalogue data block/.test(errMsg(e))) fileHandle = null;
+    setStatus("err", NOT_UPDATED + " (" + errMsg(e) + ")." + (e && e.keepNote ? "" : " The original file was left unchanged.") + " " + note, BTN_RE);
+  }
+}
+/* called after every password-authorised catalogue change */
+function commitSave() {
+  if (saving) { pendingSave = true; return true; }
+  saving = true;
+  (async () => {
+    try { await runSave(); }
+    catch (e) { setStatus("err", NOT_UPDATED + " (" + errMsg(e) + ").", BTN_RE); }
+    finally { saving = false; if (pendingSave) { pendingSave = false; commitSave(); } }
+  })();
+  return true;
+}
+/* Every add/remove/password change ends here: the admin must confirm before the main HTML file is touched.
+   "No" (or closing the dialog) discards the change and leaves the file exactly as it was. */
+let committed = null, confirming = false;
+const snap = () => JSON.stringify({ c: DATA, h: DB.adminHash });
+function changeSummary() {
+  const o = JSON.parse(committed), out = [];
+  const oc = new Map(o.c.map((c) => [c.id, c])), nc = new Map(DATA.map((c) => [c.id, c]));
+  DATA.forEach((c) => {
+    const p = oc.get(c.id);
+    if (!p) { out.push('Add category "' + c.name + '"' + (c.types.length ? " with " + c.types.length + (c.types.length === 1 ? " type" : " types") : "")); return; }
+    c.types.filter((x) => !p.types.includes(x)).forEach((x) => out.push('Add type "' + x + '" to ' + c.name));
+    p.types.filter((x) => !c.types.includes(x)).forEach((x) => out.push('Remove type "' + x + '" from ' + c.name));
+  });
+  o.c.forEach((c) => { if (!nc.has(c.id)) out.push('Remove category "' + c.name + '"'); });
+  if (o.h !== DB.adminHash) out.push("Change the admin password");
+  return out.length ? out : ["Update the catalogue"];
+}
+function discardChanges() {
+  const o = JSON.parse(committed);
+  DATA = o.c; DB.categories = DATA; DB.adminHash = o.h;
+  Object.keys(CART).forEach((id) => { if (!findProduct(id)) delete CART[id]; });
+  saveCart(); updateCartBadge(); render();
+  toast("Changes discarded. The HTML file was not changed.");
+}
+async function applyConfirmed() {
+  committed = snap();
+  cacheLocal(dataJson());
+  if (supportsFS() && !fileHandle && !(await idb.get("file"))) { await enableAutoSave(); return; }   // first time: select the file
+  commitSave();
+}
+function confirmChange() {
+  if (confirming || committed === null) return;
+  confirming = true;
+  const items = changeSummary();
+  openModal("Confirm changes", ICON_LOCK, (api) => {
+    let decided = false;
+    api.body.innerHTML = `<p class="m-note"><strong style="color:var(--ink)">Are you sure you want to make changes into the main HTML file?</strong></p>
+      <ul class="m-note" style="margin:10px 0;padding-left:18px">${items.map((s) => `<li>${esc(s)}</li>`).join("")}</ul>
+      <p class="m-note">Choose No to discard these changes. The HTML file will stay exactly as it is.</p>
+      <div class="m-actions"><button class="btn primary" type="button" data-yes>Yes, update the HTML file</button><button class="btn" type="button" data-no>No, discard changes</button></div>`;
+    api.onClose = () => { confirming = false; if (!decided) discardChanges(); };
+    api.body.querySelector("[data-yes]").addEventListener("click", () => { decided = true; api.close(); applyConfirmed(); });
+    api.body.querySelector("[data-no]").addEventListener("click", () => api.close());
+  });
+}
+function saveData() { setTimeout(confirmChange, 0); return true; }
+
+/* one-time setup (also used to re-grant permission): the administrator selects the existing store HTML file */
+async function enableAutoSave() {
+  if (!supportsFS()) { setStatus("warn", NOT_UPDATED + ": " + UNSUPPORTED + "."); return; }
+  try {
+    let h = fileHandle || await idb.get("file");
+    if (!(h && await ensurePerm(h, true))) {
+      setStatus("busy", "Select the existing Apps Works Store HTML file in the dialog, then allow editing.");
+      [h] = await window.showOpenFilePicker({ id: "aw-store", multiple: false, types: [{ description: "Apps Works Store HTML", accept: { "text/html": [".html", ".htm"] } }] });
+      const text = await (await h.getFile()).text();
+      if (!/Apps Works Store/.test(text) || !replaceDataBlock(text, "{}")) throw new Error("that file is not the Apps Works Store HTML");
+      if (!(await ensurePerm(h, true))) { setStatus("warn", NOT_UPDATED + ": permission to edit it was not granted. " + browserNote(true), BTN_ENABLE); return; }
+    }
+    fileHandle = h;
+    const stored = await idb.set("file", h);
+    await runSave();
+    if (!stored) toast(lastStatus.msg + " (This browser could not remember the file, so you may need to select it again next time.)", 10000, lastStatus.kind === "ok" ? "warn" : lastStatus.kind);
+  } catch (e) {
+    if (e && e.name === "AbortError") { setStatus("warn", "Setup cancelled. " + NOT_UPDATED + " yet; automatic saving is not enabled. " + browserNote(true), BTN_ENABLE); return; }
+    setStatus("err", "Could not enable automatic saving: " + errMsg(e) + ". " + NOT_UPDATED + ". " + browserNote(true), BTN_ENABLE);
+  }
+}
+async function initAutoSave() {
+  if (supportsFS()) fileHandle = await idb.get("file");
+}
+
+/* Products are idle for now: type tiles show no products and do not open. Set to true to switch them back on. */
+const PRODUCTS_LIVE = false;
+if (!PRODUCTS_LIVE) { $("#addProductBtn").hidden = true; $("#cartBtn").hidden = true; }
+let DB = loadEmbedded();
+let DATA = DB.categories;
+let CART = store.get(CART_KEY) || {};
+const saveCart = () => store.set(CART_KEY, CART);
+const KNOWN_CATS = ["electronics", "fashion", "home", "grocery", "books", "sports", "ia7sj6y", "bnc3vyi"];
+const hueVar = (cat) => KNOWN_CATS.includes(cat.id) ? `var(--k-${cat.id})` : `var(--c${(Math.max(0, DATA.indexOf(cat)) % 12) + 1})`;   // one distinct colour per category (by position)
+const totalProducts = () => DATA.reduce((n, c) => n + c.products.length, 0);
+function findProduct(id) {
+  for (const c of DATA) { const p = c.products.find((x) => x.id === id); if (p) return { p, c }; }
+  return null;
+}
+
+/* toast */
+let toastTimer = null;
+function toast(msg, ms, kind) {
+  const t = $("#toast"); t.textContent = msg; t.className = "show" + (kind === "err" || kind === "warn" ? " " + kind : "");
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove("show"), ms || 2200);
+}
+
+/* render: every category is a shelf, every type is a book spine (one screen, no drill-down) */
+function render() {
+  const q = $("#q").value.trim().toLowerCase();
+  const board = $("#board");
+  board.classList.toggle("searching", !!q);
+  const manage = document.body.classList.contains("manage");
+  let shown = 0;
+  const view = [];
+  DATA.forEach((cat) => {
+    const list = cat.types.filter((t) => !q || (t + " " + cat.name + " " + (cat.title || "") + " " + ((cat.typeInfo && cat.typeInfo[t] && (cat.typeInfo[t].title + " " + cat.typeInfo[t].desc)) || "")).toLowerCase().includes(q)
+      || (PRODUCTS_LIVE && cat.products.some((p) => p.type === t && (p.name + " " + p.desc).toLowerCase().includes(q))));
+    if (q && !list.length) return;
+    shown += list.length;
+    view.push({ cat, list });
+  });
+  const favs = q ? [] : favList();
+  const ic = (c) => CAT_ICONS[c.icon] || CAT_ICONS[0];
+  const spine = (t, cid, i, fav, tip) => {
+    const cc = DATA.find((c) => c.id === cid) || {}, inf = (cc.typeInfo || {})[t] || {};
+    const edge = !!inf.edge;
+    const labelSize = Math.min(22, (edge ? 165 : 195) / (Math.max(t.length, 1) * 0.62));   // larger lettering; long names still shrink to fit the spine
+    const h = 225;   // every book has the same height
+    const aria = (inf.title || t) + (inf.desc ? ". " + inf.desc : "") + (edge ? ". Opens in Microsoft Edge" : ". Opens a Google search");
+    return `<div class="sp${edge ? " sp-edge" : ""}" role="button" tabindex="0" style="--sh:${h}px;--label-size:${labelSize.toFixed(2)}px;--m:${100 - (i % 3) * 8}%" data-type="${esc(t)}" data-cat="${cid}"${fav ? ' data-fav="1"' : ""}${PRODUCTS_LIVE ? ` data-open="${esc(t)}"` : ""} aria-label="${esc(aria)}"><span class="sn">${esc(t)}</span>${edge ? `<span class="se" aria-hidden="true">E</span>` : ""}${fav ? "" : `<button class="del" type="button" data-deltype="${esc(t)}" data-cat="${cid}" aria-label="Delete type ${esc(t)}">${svg(ICON_X)}</button>`}</div>`;
+  };
+  const shelf = (hue, icon, name, meta, spines, extra) => `<section class="shelf" style="--hue:${hue}${hue === "var(--fav)" ? ";--on-hue:#ffffff" : ""}"><h2>${svg(icon, "cico")}<span class="nm" title="${esc(name)}">${esc(name)}</span><small>${meta}</small><span class="bk-controls" hidden><button class="bk-arrow" type="button" data-scroll-dir="-1" aria-label="Scroll ${esc(name)} books left" title="Scroll left">‹</button><button class="bk-arrow" type="button" data-scroll-dir="1" aria-label="Scroll ${esc(name)} books right" title="Scroll right">›</button></span>${extra}</h2><div class="bk">${spines}</div></section>`;
+  let html = "";
+  if (favs.length) html += shelf("var(--fav)", ic({ icon: 7 }), "Favourites", `${favs.length} most visited`,
+    favs.map((f, i) => spine(f.type, f.cat.id, i, true, `${f.type}, ${f.cat.name}, ${f.n} ${f.n === 1 ? "visit" : "visits"}`)).join(""),
+    `<button class="fav-x" type="button" data-favclear>Clear</button>`);
+  view.forEach(({ cat, list }) => {
+    const add = (manage && !q) ? `<button class="sp add-sp" type="button" data-addtype="${cat.id}" style="--sh:225px"><span class="sn">+ Add type</span></button>` : "";
+    const none = (list.length || manage) ? "" : `<span class="none">No types yet</span>`;
+    html += shelf(hueVar(cat), ic(cat), cat.title || cat.name, `${list.length} ${list.length === 1 ? "type" : "types"}`,
+      list.map((t, i) => spine(t, cat.id, i)).join("") + add + none,
+      `<button class="del-cat" type="button" data-delcat="${cat.id}">Delete category</button>`);
+  });
+  board.innerHTML = html;
+  layoutBoard();
+  updateShelfScrollControls();
+  const none = !DATA.length || (q && shown === 0);
+  $("#empty").hidden = !none;
+  $("#board").hidden = !!none;
+  if (none) {
+    if (!DATA.length) { $("#emptyTitle").textContent = "No categories yet"; $("#emptyText").textContent = "Add a category to start building your store."; $("#emptyReset").textContent = "Add category"; $("#emptyReset").dataset.mode = "cat"; }
+    else { $("#emptyTitle").textContent = "No types match your search"; $("#emptyText").innerHTML = `Nothing matches <span class="q">${esc($("#q").value.trim())}</span>. Try a different keyword.`; $("#emptyReset").textContent = "Clear search"; $("#emptyReset").dataset.mode = "clear"; }
+  }
+  $("#resultCount").textContent = q ? `${shown} of ${DATA.reduce((n, c) => n + c.types.length, 0)}` : "";
+  $(".search").classList.toggle("has-value", !!$("#q").value);
+  $("#footCount").textContent = `${DATA.reduce((n, c) => n + c.types.length, 0)} types in ${DATA.length} categories`;}
+/* Choose shelf columns and vertical scale only; book widths remain large and overflow is handled by arrows. */
+function layoutBoard() {
+  const b = $("#board"); if (b.hidden || !b.children.length) return;
+  const n = b.children.length, w = b.clientWidth, gap = 24, narrow = matchMedia("(max-width: 760px)").matches;
+  const top = b.getBoundingClientRect().top + window.scrollY, avail = Math.max(360, window.innerHeight - top - 90);
+  let best = { u: 0, c: 1 };
+  for (let c = 1; c <= (narrow ? 1 : 4); c++) {
+    const rows = Math.ceil(n / c);
+    const u = Math.min(1, narrow ? 9 : (avail / rows - 74) / 235);
+    if (u > best.u + 0.02) best = { u, c };
+  }
+  b.style.setProperty("--cols", best.c);
+  b.style.setProperty("--u", Math.max(narrow ? 0.7 : 0.62, best.u).toFixed(3));
+}
+function updateShelfScrollControl(shelf) {
+  if (!shelf) return;
+  const track = shelf.querySelector(".bk"), controls = shelf.querySelector(".bk-controls");
+  if (!track || !controls) return;
+  const maxScroll = Math.max(0, track.scrollWidth - track.clientWidth);
+  controls.hidden = maxScroll <= 2;
+  const left = controls.querySelector('[data-scroll-dir="-1"]');
+  const right = controls.querySelector('[data-scroll-dir="1"]');
+  if (left) left.disabled = track.scrollLeft <= 2;
+  if (right) right.disabled = track.scrollLeft >= maxScroll - 2;
+}
+function updateShelfScrollControls() {
+  document.querySelectorAll("#board .shelf").forEach((shelf) => {
+    const track = shelf.querySelector(".bk");
+    if (track && !track.dataset.arrowTracking) {
+      track.dataset.arrowTracking = "1";
+      track.addEventListener("scroll", () => updateShelfScrollControl(shelf), { passive: true });
+    }
+    updateShelfScrollControl(shelf);
+  });
+}
+$("#board").addEventListener("click", (e) => {
+  const button = e.target.closest(".bk-arrow");
+  if (!button) return;
+  const shelf = button.closest(".shelf"), track = shelf && shelf.querySelector(".bk");
+  if (!track) return;
+  const direction = Number(button.dataset.scrollDir) || 1;
+  track.scrollBy({ left: direction * Math.max(160, track.clientWidth * 0.72), behavior: "smooth" });
+});
+window.addEventListener("resize", () => { layoutBoard(); updateShelfScrollControls(); });
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { layoutBoard(); updateShelfScrollControls(); });
+document.addEventListener("keydown", (e) => {
+  if ((e.key === "Enter" || e.key === " ") && e.target.matches && e.target.matches(".sp[role=button], [data-favclear][role=button]")) { e.preventDefault(); e.target.click(); return; }
+});
+/* ---- Favourites: the types this customer opens most often. Counted per browser (localStorage), never written into the catalogue. ---- */
+const VISITS_KEY = "aw-visits-v1", FAV_MAX = 8;
+let VISITS = store.get(VISITS_KEY) || {};
+function bumpVisit(catId, type) {
+  const k = catId + "|" + type, v = VISITS[k] || { n: 0, t: 0 };
+  v.n++; v.t = Date.now(); VISITS[k] = v;
+  store.set(VISITS_KEY, VISITS); renderFav();
+}
+function favList() {
+  const out = [];
+  Object.keys(VISITS).forEach((k) => {
+    const i = k.indexOf("|"), cat = DATA.find((c) => c.id === k.slice(0, i)), type = k.slice(i + 1);
+    if (cat && cat.types.includes(type)) out.push({ cat, type, n: VISITS[k].n, t: VISITS[k].t });   // types that were deleted drop out
+  });
+  return out.sort((a, b) => b.n - a.n || b.t - a.t).slice(0, FAV_MAX);
+}
+const renderFav = () => {};   // the Favourites shelf refreshes on the next render (search, Manage, reload) so shelves never jump under the pointer
+
+/* two-step confirm for destructive buttons */
+function arm(btn, action) {
+  if (btn.dataset.armed) { requireAdmin(action); return; }
+  btn.dataset.armed = "1";
+  const old = btn.innerHTML; btn.textContent = "Confirm?";
+  setTimeout(() => { if (btn.isConnected) { delete btn.dataset.armed; btn.innerHTML = old; } }, 3000);
+}
+
+/* cart */
+function cartLines() {
+  const out = [];
+  Object.keys(CART).forEach((id) => { const f = findProduct(id); if (f && CART[id] > 0) out.push({ p: f.p, c: f.c, qty: CART[id] }); else delete CART[id]; });
+  return out;
+}
+function updateCartBadge() { $("#cartCount").textContent = cartLines().reduce((n, l) => n + l.qty, 0); }
+function addToCart(id) {
+  const f = findProduct(id); if (!f) return;
+  CART[id] = (CART[id] || 0) + 1; saveCart(); updateCartBadge();
+  toast(`Added ${f.p.name} to cart`);
+}
+
+/* generic dialog */
+function openModal(title, iconInner, fill, wide) {
+  const o = document.createElement("div");
+  o.className = "modal"; o.setAttribute("role", "dialog"); o.setAttribute("aria-modal", "true"); o.setAttribute("aria-label", title);
+  o.innerHTML = `<div class="m-panel${wide ? " wide" : ""}"><button class="m-close" type="button" aria-label="Close dialog">${svg(ICON_X)}</button><div class="m-head"><span class="m-icon">${svg(iconInner)}</span><h2 class="m-title">${esc(title)}</h2></div><div class="m-body"></div></div>`;
+  document.body.appendChild(o);
+  const last = document.activeElement;
+  const close = () => { if (api.onClose) { const f = api.onClose; api.onClose = null; f(); } o.classList.remove("open"); document.removeEventListener("keydown", onKey, true); setTimeout(() => o.remove(), 200); if (last && last.focus) last.focus(); };
+  const onKey = (e) => {
+    if (e.key === "Escape") { e.stopPropagation(); close(); return; }
+    if (e.key === "Tab") {
+      const f = o.querySelectorAll("a[href], button:not([disabled]), input:not([type=hidden]), select, textarea"); if (!f.length) return;
+      const first = f[0], end = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); end.focus(); }
+      else if (!e.shiftKey && document.activeElement === end) { e.preventDefault(); first.focus(); }
+    }
+  };
+  o.querySelector(".m-close").addEventListener("click", close);
+  o.addEventListener("mousedown", (e) => { if (e.target === o) close(); });
+  const api = { close, body: o.querySelector(".m-body"), el: o };
+  fill(api);
+  document.addEventListener("keydown", onKey, true);
+  o.style.display = "grid";
+  requestAnimationFrame(() => o.classList.add("open"));
+  setTimeout(() => { const t = o.querySelector("input:not([type=radio]), select, .btn"); if (t) t.focus(); }, 60);
+  return api;
+}
+
+/* cart dialog */
+function openCart() {
+  openModal("Your cart", ICON_CART, (api) => {
+    function draw() {
+      const lines = cartLines(); updateCartBadge();
+      if (!lines.length) {
+        api.body.innerHTML = `<p class="m-note">Your cart is empty. Add products from any category.</p><div class="m-actions"><button class="btn primary" type="button" data-close>Keep shopping</button></div>`;
+        return;
+      }
+      const sum = lines.reduce((n, l) => n + l.p.price * l.qty, 0);
+      api.body.innerHTML = `<div class="lines">${lines.map((l) => `
+        <div class="line">
+          <div><div class="ln">${esc(l.p.name)}</div><div class="lt">${esc(l.c.name)} / ${esc(l.p.type)} &middot; ${inr.format(l.p.price)}</div></div>
+          <div class="lp">${inr.format(l.p.price * l.qty)}</div>
+          <div class="qty"><button type="button" data-q="-1" data-id="${l.p.id}" aria-label="Decrease quantity of ${esc(l.p.name)}">&minus;</button><b>${l.qty}</b><button type="button" data-q="1" data-id="${l.p.id}" aria-label="Increase quantity of ${esc(l.p.name)}">+</button></div>
+          <button class="rm" type="button" data-rm="${l.p.id}">Remove</button>
+        </div>`).join("")}</div>
+        <div class="total"><span>Total</span><strong>${inr.format(sum)}</strong></div>
+        <div class="m-actions"><button class="btn primary" type="button" data-order>Place order</button><button class="btn" type="button" data-close>Keep shopping</button></div>`;
+    }
+    api.body.addEventListener("click", (e) => {
+      const q = e.target.closest("[data-q]"), rm = e.target.closest("[data-rm]");
+      if (e.target.closest("[data-close]")) { api.close(); return; }
+      if (q) { const id = q.dataset.id; CART[id] = Math.max(0, (CART[id] || 0) + Number(q.dataset.q)); if (!CART[id]) delete CART[id]; saveCart(); draw(); return; }
+      if (rm) { delete CART[rm.dataset.rm]; saveCart(); draw(); return; }
+      if (e.target.closest("[data-order]")) {
+        const id = "AW-" + Math.floor(100000 + Math.random() * 900000);
+        CART = {}; saveCart(); updateCartBadge();
+        api.body.innerHTML = `<p class="m-note"><strong style="color:var(--ink)">Order ${id} placed.</strong><br>This storefront has no payment or delivery backend connected yet, so nothing was charged or shipped.</p><div class="m-actions"><button class="btn primary" type="button" data-close>Done</button></div>`;
+      }
+    });
+    draw();
+  });
+}
+
+/* image upload: shrink to a small square thumbnail so storage stays light */
+function readImage(file) {
+  return new Promise((resolve, reject) => {
+    const fr = new FileReader();
+    fr.onerror = () => reject(new Error("read"));
+    fr.onload = () => {
+      const im = new Image();
+      im.onerror = () => reject(new Error("img"));
+      im.onload = () => {
+        const S = 160, c = document.createElement("canvas"); c.width = c.height = S;
+        const k = Math.max(S / im.width, S / im.height), w = im.width * k, h = im.height * k;
+        c.getContext("2d").drawImage(im, (S - w) / 2, (S - h) / 2, w, h);
+        resolve(c.toDataURL("image/jpeg", 0.8));
+      };
+      im.src = fr.result;
+    };
+    fr.readAsDataURL(file);
+  });
+}
+
+/* add product */
+function openProductForm(preCat, preType) {
+  if (!DATA.length) { openCategoryForm(); return; }
+  openModal("Add product", ICON_PLUS, (api) => {
+    const cur = DATA.find((c) => c.id === preCat) || DATA[0];
+    api.body.innerHTML = `<form class="form" id="pf" novalidate>
+      <div class="field"><label for="pf-cat">Category</label><select id="pf-cat">${DATA.map((c) => `<option value="${c.id}"${c.id === cur.id ? " selected" : ""}>${esc(c.name)}</option>`).join("")}</select></div>
+      <div class="field"><label for="pf-type">Type</label><input id="pf-type" type="text" list="pf-types" maxlength="30" placeholder="Pick one or type a new type" autocomplete="off"><datalist id="pf-types"></datalist><span class="hint">A new type appears as a chip on the category row.</span></div>
+      <div class="field"><label for="pf-name">Product name</label><input id="pf-name" type="text" maxlength="60" autocomplete="off"></div>
+      <div class="field"><label for="pf-desc">Description</label><input id="pf-desc" type="text" maxlength="90" autocomplete="off"></div>
+      <div class="field"><label for="pf-price">Price (INR)</label><input id="pf-price" type="number" min="0" step="1" inputmode="numeric"></div>
+      <div class="field"><label for="pf-img">Photo (optional)</label><input id="pf-img" type="file" accept="image/*"></div>
+      <p class="err" id="pf-err" role="alert" hidden></p>
+      <div class="m-actions"><button class="btn primary" type="submit">Add product</button><button class="btn" type="button" data-cancel>Cancel</button></div></form>`;
+    const catSel = api.body.querySelector("#pf-cat");
+    const fillTypes = () => {
+      const c = DATA.find((x) => x.id === catSel.value);
+      api.body.querySelector("#pf-types").innerHTML = c.types.map((t) => `<option value="${esc(t)}"></option>`).join("");
+    };
+    catSel.addEventListener("change", fillTypes); fillTypes();
+    if (preType) api.body.querySelector("#pf-type").value = preType;
+    api.body.querySelector("[data-cancel]").addEventListener("click", api.close);
+    api.body.querySelector("#pf").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const err = api.body.querySelector("#pf-err");
+      const name = api.body.querySelector("#pf-name").value.trim();
+      const priceRaw = api.body.querySelector("#pf-price").value;
+      const price = Number(priceRaw);
+      if (!name) { err.textContent = "Enter a product name."; err.hidden = false; api.body.querySelector("#pf-name").focus(); return; }
+      if (priceRaw === "" || !isFinite(price) || price < 0) { err.textContent = "Enter a price of 0 or more."; err.hidden = false; api.body.querySelector("#pf-price").focus(); return; }
+      const cat = DATA.find((x) => x.id === catSel.value);
+      let type = api.body.querySelector("#pf-type").value.trim() || "General";
+      const known = cat.types.find((t) => t.toLowerCase() === type.toLowerCase());
+      if (known) type = known;
+      else { const o = typeOwner(type); if (o) { err.textContent = `"${type}" is already a type in ${o.name}. Each type can belong to only one category.`; err.hidden = false; return; } cat.types.push(type); }
+      let img = "";
+      const file = api.body.querySelector("#pf-img").files[0];
+      if (file) { try { img = await readImage(file); } catch (x) { err.textContent = "That image could not be read. Choose a JPG or PNG, or leave the photo empty."; err.hidden = false; return; } }
+      const prod = { id: uid(), name, desc: api.body.querySelector("#pf-desc").value.trim(), price: Math.round(price), type, img };
+      cat.products.push(prod);
+      if (!saveData()) toast("Added, but this browser could not save it");
+      else toast(`Added ${name} to ${cat.name}`);
+      api.close(); render();
+    });
+  });
+}
+
+/* add category */
+function openCategoryForm() {
+  openModal("Add category", CAT_ICONS[0], (api) => {
+    api.body.innerHTML = `<form class="form" id="cf" novalidate>
+      <div class="field"><label for="cf-name">Category name</label><input id="cf-name" type="text" maxlength="30" autocomplete="off"></div>
+      <div class="field"><label for="cf-types">Types</label><input id="cf-types" type="text" maxlength="160" placeholder="Comma separated, e.g. Men, Women, Kids" autocomplete="off"><span class="hint">Each type can belong to only one category. You can add more later with "Add type".</span></div>
+      <div class="field"><span class="lbl" id="cf-col-l">Colour</span><div class="swatches" role="radiogroup" aria-labelledby="cf-col-l">
+        ${[0, 1, 2, 3, 4, 5].map((i) => `<label class="sw col" style="--c:var(--h${i + 1})"><input class="sr-only" type="radio" name="cf-col" value="${i}"${i === DATA.length % 6 ? " checked" : ""}><span></span><span class="sr-only">Colour ${i + 1}</span></label>`).join("")}</div></div>
+      <div class="field"><span class="lbl" id="cf-ico-l">Icon</span><div class="swatches" role="radiogroup" aria-labelledby="cf-ico-l">
+        ${CAT_ICONS.map((p, i) => `<label class="sw ico"><input class="sr-only" type="radio" name="cf-ico" value="${i}"${i === 0 ? " checked" : ""}><span>${svg(p)}</span><span class="sr-only">Icon ${i + 1}</span></label>`).join("")}</div></div>
+      <p class="err" id="cf-err" role="alert" hidden></p>
+      <div class="m-actions"><button class="btn primary" type="submit">Add category</button><button class="btn" type="button" data-cancel>Cancel</button></div></form>`;
+    api.body.querySelector("[data-cancel]").addEventListener("click", api.close);
+    api.body.querySelector("#cf").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const err = api.body.querySelector("#cf-err");
+      const name = api.body.querySelector("#cf-name").value.trim();
+      if (!name) { err.textContent = "Enter a category name."; err.hidden = false; api.body.querySelector("#cf-name").focus(); return; }
+      if (DATA.some((c) => c.name.toLowerCase() === name.toLowerCase())) { err.textContent = "A category with this name already exists."; err.hidden = false; return; }
+      const types = [];
+      api.body.querySelector("#cf-types").value.split(",").map((t) => t.trim()).filter(Boolean).forEach((t) => { if (!types.some((x) => x.toLowerCase() === t.toLowerCase())) types.push(t); });
+      const clash = types.find((t) => typeOwner(t));
+      if (clash) { err.textContent = `"${clash}" is already a type in ${typeOwner(clash).name}. Each type can belong to only one category.`; err.hidden = false; return; }
+      const cat = { id: uid(), name, hue: Number(api.body.querySelector('input[name="cf-col"]:checked').value), icon: Number(api.body.querySelector('input[name="cf-ico"]:checked').value), types, products: [] };
+      DATA.push(cat); saveData(); api.close(); render();
+      toast(`Added category ${name}`);
+    });
+  });
+}
+
+/* add type to an existing category */
+function openTypeForm(catId) {
+  const cat = DATA.find((c) => c.id === catId); if (!cat) return;
+  openModal("Add type", ICON_PLUS, (api) => {
+    api.body.innerHTML = `<form class="form" id="tf" novalidate>
+      <p class="m-note">New type in <strong style="color:var(--ink)">${esc(cat.name)}</strong>. It shows as a chip above the products.</p>
+      <div class="field"><label for="tf-name">Type name</label><input id="tf-name" type="text" maxlength="30" autocomplete="off"></div>
+      <p class="err" id="tf-err" role="alert" hidden></p>
+      <div class="m-actions"><button class="btn primary" type="submit">Add type</button><button class="btn" type="button" data-cancel>Cancel</button></div></form>`;
+    api.body.querySelector("[data-cancel]").addEventListener("click", api.close);
+    api.body.querySelector("#tf").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const err = api.body.querySelector("#tf-err");
+      const t = api.body.querySelector("#tf-name").value.trim();
+      if (!t) { err.textContent = "Enter a type name."; err.hidden = false; return; }
+      const own = typeOwner(t);
+      if (own) { err.textContent = own.id === cat.id ? "This type already exists in the category." : `"${t}" is already a type in ${own.name}. Each type can belong to only one category.`; err.hidden = false; return; }
+      cat.types.push(t); saveData(); api.close(); render(); toast(`Added type ${t}`);
+    });
+  });
+}
+
+
+/* type dialog: products inside one type */
+function openTypeDialog(catId, type) {
+  const cat = DATA.find((c) => c.id === catId); if (!cat) return;
+  openModal(type, CAT_ICONS[cat.icon] || CAT_ICONS[0], (api) => {
+    function draw() {
+      const items = cat.products.filter((p) => p.type === type);
+      api.body.innerHTML = `<p class="m-note">${esc(cat.name)} &middot; ${items.length} ${items.length === 1 ? "product" : "products"}</p>
+        <div class="plist" style="--hue:${hueVar(cat)}">${items.length ? items.map((p) => `
+          <div class="pitem">
+            <span class="mono">${p.img ? `<img class="pimg" src="${p.img}" alt="">` : svg(CAT_ICONS[cat.icon] || CAT_ICONS[0], "aico")}</span>
+            <div class="pt"><div class="ln">${esc(p.name)}</div>${p.desc ? `<div class="lt">${esc(p.desc)}</div>` : ""}<div class="lp">${inr.format(p.price)}</div></div>
+            <button class="add" type="button" data-add="${p.id}" aria-label="Add ${esc(p.name)} to cart">${svg(ICON_PLUS)}</button>
+            <button class="rm pdel" type="button" data-pdel="${p.id}">Delete</button>
+          </div>`).join("") : `<p class="m-note">No products in ${esc(type)} yet.</p>`}</div>
+        <div class="m-actions"><button class="btn primary" type="button" data-addp>Add product</button><button class="btn" type="button" data-close>Close</button></div>`;
+    }
+    api.body.addEventListener("click", (e) => {
+      const d = e.target.closest("[data-pdel]");
+      if (e.target.closest("[data-close]")) { api.close(); return; }
+      if (e.target.closest("[data-addp]")) { api.close(); requireAdmin(() => openProductForm(catId, type)); return; }
+      if (d) arm(d, () => {
+        const f = findProduct(d.dataset.pdel); if (!f) return;
+        cat.products = cat.products.filter((x) => x.id !== f.p.id); delete CART[f.p.id];
+        saveData(); saveCart(); updateCartBadge(); draw(); render(); toast(`Deleted ${f.p.name}`);
+      });
+    });
+    draw();
+  }, true);
+}
+
+/* ---- Type links: a tap on a type searches that type on Google. Types marked "edge" open in Microsoft Edge only.
+   A web page cannot open a private/incognito window by itself. Set PRIVATE_PREFIX to the custom protocol of a small
+   launcher installed on the PC (for example "awprivate:") and every normal link is handed to it; leave "" for a normal tab. ---- */
+const GOOGLE_SEARCH = "https://www.google.com/search?q=";
+const EDGE_PREFIX = "microsoft-edge:";
+const PRIVATE_PREFIX = "";
+function openTypeLink(catId, type) {
+  const cat = DATA.find((c) => c.id === catId), inf = ((cat && cat.typeInfo) || {})[type] || {};
+  const url = inf.url || GOOGLE_SEARCH + encodeURIComponent(type);
+  const a = document.createElement("a");
+  a.rel = "noopener noreferrer";
+  if (inf.edge) { a.href = EDGE_PREFIX + url; toast("Opening " + type + " in Microsoft Edge..."); }
+  else if (PRIVATE_PREFIX) { a.href = PRIVATE_PREFIX + url; toast("Opening " + type + " in a private window..."); }
+  else { a.href = url; a.target = "_blank"; toast("Searching Google for " + type + "..."); }
+  a.style.display = "none"; document.body.appendChild(a); a.click(); a.remove();
+}
+
+/* clicks */
+/* hover / keyboard-focus card: long name, 40-char description and where the link goes */
+const tipEl = document.createElement("div"); tipEl.id = "tip"; tipEl.setAttribute("role", "tooltip"); document.body.appendChild(tipEl);
+function showTip(el) {
+  const t = el.dataset.type, cat = DATA.find((c) => c.id === el.dataset.cat) || {}, inf = (cat.typeInfo || {})[t] || {};
+  tipEl.innerHTML = `<b>${esc(inf.title || t)}</b>${inf.desc ? `<p>${esc(inf.desc)}</p>` : ""}<span class="tg${inf.edge ? " ed" : ""}">${inf.edge ? "Opens in Microsoft Edge" : "Google search: " + esc(t)}</span><i>${esc(cat.title || cat.name || "")}</i>`;
+  tipEl.classList.add("on");
+  const r = el.getBoundingClientRect(), w = tipEl.offsetWidth, h = tipEl.offsetHeight;
+  let y = r.top - h - 14; if (y < 8) y = r.bottom + 14;
+  tipEl.style.left = Math.min(Math.max(8, r.left + r.width / 2 - w / 2), innerWidth - w - 8) + "px";
+  tipEl.style.top = y + "px";
+}
+const hideTip = () => tipEl.classList.remove("on");
+document.addEventListener("mouseover", (e) => { const el = e.target.closest && e.target.closest(".sp[data-type]"); if (el && !e.target.closest(".del")) showTip(el); else hideTip(); });
+document.addEventListener("focusin", (e) => { const el = e.target.closest && e.target.closest(".sp[data-type]"); if (el) showTip(el); else hideTip(); });
+document.addEventListener("focusout", hideTip);
+window.addEventListener("scroll", hideTip, true);
+document.addEventListener("click", hideTip, true);
+
+document.addEventListener("click", (e) => {
+  const t = e.target;
+  let el;
+  const tl = t.closest(".sp[data-type]");
+  if (tl && !t.closest(".del")) bumpVisit(tl.dataset.cat, tl.dataset.type);   // every tap on a type counts as a visit for Favourites
+  if (t.closest("[data-favclear]")) { VISITS = {}; store.set(VISITS_KEY, VISITS); render(); toast("Favourites cleared"); return; }
+  if ((el = t.closest(".sp[data-type]")) && !t.closest(".del")) { openTypeLink(el.dataset.cat, el.dataset.type); return; }
+  if ((el = t.closest("[data-add]"))) { addToCart(el.dataset.add); return; }
+  if ((el = t.closest("[data-deltype]"))) {
+    arm(el, () => {
+      const c = DATA.find((x) => x.id === el.dataset.cat); if (!c) return;
+      const ty = el.dataset.deltype;
+      c.products.filter((p) => p.type === ty).forEach((p) => delete CART[p.id]);
+      c.products = c.products.filter((p) => p.type !== ty); c.types = c.types.filter((x) => x !== ty); if (c.typeInfo) delete c.typeInfo[ty];
+      saveData(); saveCart(); updateCartBadge(); render(); toast(`Deleted type ${ty}`);
+    }); return;
+  }
+  if ((el = t.closest("[data-open]"))) { openTypeDialog(el.dataset.cat, el.dataset.open); return; }
+  if ((el = t.closest("[data-addtype]"))) { const id = el.dataset.addtype; requireAdmin(() => openTypeForm(id)); return; }
+  if ((el = t.closest("[data-addin]"))) { openProductForm(el.dataset.addin); return; }
+  if ((el = t.closest("[data-del]"))) {
+    arm(el, () => {
+      const f = findProduct(el.dataset.del); if (!f) return;
+      f.c.products = f.c.products.filter((x) => x.id !== f.p.id); delete CART[f.p.id];
+      saveData(); saveCart(); updateCartBadge(); render(); toast(`Deleted ${f.p.name}`);
+    }); return;
+  }
+  if ((el = t.closest("[data-delcat]"))) {
+    arm(el, () => {
+      const c = DATA.find((x) => x.id === el.dataset.delcat); if (!c) return;
+      DATA = DATA.filter((x) => x.id !== c.id); saveData(); updateCartBadge(); render(); toast(`Deleted category ${c.name}`);
+    }); return;
+  }
+});
+$("#addProductBtn").addEventListener("click", () => requireAdmin(() => openProductForm()));
+$("#pwBtn").addEventListener("click", changePassword);
+$("#fileBtn").addEventListener("click", () => requireAdmin(async () => {
+  fileHandle = null; await idb.set("file", null);   // forget the old file, then pick the new one
+  await enableAutoSave();
+}));
+$("#resetBtn").addEventListener("click", (e) => arm(e.currentTarget, async () => {
+  const j = await fetchDefaultJson();
+  DATA = j ? j.categories : seed(); CART = {};
+  saveData(); saveCart(); updateCartBadge(); render(); toast("Default data restored");
+}));
+
+/* search */
+$("#q").addEventListener("input", render);
+function clearSearch() { $("#q").value = ""; render(); }
+$("#sClear").addEventListener("click", () => { clearSearch(); $("#q").focus(); });
+$("#emptyReset").addEventListener("click", (e) => { if (e.currentTarget.dataset.mode === "cat") openCategoryForm(); else { clearSearch(); $("#q").focus(); } });
+document.addEventListener("keydown", (e) => {
+  const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName);
+  if (e.key === "/" && !typing) { e.preventDefault(); $("#q").focus(); }
+  if (e.key === "Escape" && document.activeElement === $("#q")) { $("#q").value = ""; render(); $("#q").blur(); }
+});
+
+
+/* theme toggle (remembered per viewer) */
+const root = document.documentElement;
+const savedTheme = store.get("store-theme-v2");
+if (savedTheme) root.setAttribute("data-theme", savedTheme);
+$("#themeBtn").addEventListener("click", () => {
+  const cur = root.getAttribute("data-theme");
+  const dark = cur === "dark";
+  const next = dark ? "light" : "dark";
+  root.setAttribute("data-theme", next); store.set("store-theme-v2", next);
+});
+
+committed = snap();
+updateCartBadge(); render(); initAutoSave();
+if (!DB.initialized && !DATA.length) {
+  fetchDefaultJson().then((j) => { DATA = j ? j.categories : seed(); DB.categories = DATA; committed = snap(); render(); });
+}
+</script>
+
+</body></html>
